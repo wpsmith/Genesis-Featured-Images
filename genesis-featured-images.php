@@ -26,11 +26,12 @@ License: GPLv2
 
 define( 'GFI_DOMAIN' , 'genesis-featured-images' );
 define( 'GFI_PLUGIN_DIR', dirname( __FILE__ ) );
-define( "GFI_URL" , WP_PLUGIN_URL.'/'.str_replace(basename( __FILE__),"",plugin_basename(__FILE__)) );
+define( 'GFI_URL' , WP_PLUGIN_URL.'/'.str_replace(basename( __FILE__),"",plugin_basename(__FILE__)) );
+define( 'GFI_PREFIX', '_gfi_' );
 
 /* Prevent direct access to the plugin */
 if ( !defined( 'ABSPATH' ) ) {
-    wp_die( __( "Sorry, you are not allowed to access this page directly.", 'GFI' ) );
+    wp_die( __( 'Sorry, you are not allowed to access this page directly.', 'GFI' ) );
 }
 
 register_activation_hook( __FILE__, 'gfi_activation_check' );
@@ -45,7 +46,7 @@ register_activation_hook( __FILE__, 'gfi_activation_check' );
  */
 function gfi_activation_check() {
 
-    $latest = '1.8';
+    $latest = '2.0';
 
     $theme_info = get_theme_data( TEMPLATEPATH . '/style.css' );
 
@@ -84,23 +85,31 @@ function gfi_truncate( $str, $length=10 ) {
     return $res;
 }
 
-//	add "Settings" link to plugin page
-add_filter('plugin_action_links_' . plugin_basename(__FILE__) , 'gfi_action_links');
+add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ) , 'gfi_action_links' );
+/**
+ * Add "Settings" link to plugin page
+ */
 function gfi_action_links($links) {
-	$gif_settings_link = sprintf( '<a href="%s">%s</a>', admin_url( 'admin.php?page=genesis' ), __('Settings') );
-	array_unshift($links, $gif_settings_link);
+	$gif_settings_link = sprintf( '<a href="%s">%s</a>',
+		admin_url( 'admin.php?page=genesis' ),
+		__( 'Settings', GFI_DOMAIN ) );
+	array_unshift( $links, $gif_settings_link );
 	return $links;
 }
 
-add_action( 'genesis_init', 'gfi_init', 15 );
-/** Loads required files when needed */
+// Add metaboxes
+require_once( GFI_PLUGIN_DIR . '/lib/functions.php' );
+
+add_action( 'after_setup_theme', 'gfi_init', 15 );
+/**
+ * Loads admin file
+ */
 function gfi_init() {
-
-	require_once(GFI_PLUGIN_DIR . '/lib/default-feature-img.php');
-	require_once(GFI_PLUGIN_DIR . '/lib/metaboxes.php');
-
+	if ( is_admin() ) {
+		require_once( GFI_PLUGIN_DIR . '/lib/metaboxes.php' );
+		require_once( GFI_PLUGIN_DIR . '/lib/admin-settings.php' );
+	}
 }
-
 
 add_action( 'get_header', 'gfi_remove_do_post_image' );
 /**
