@@ -38,6 +38,9 @@ Yes. Here are some things that I want to eventually include:
 1. Inpost Settings Metabox
 
 == Changelog ==
+= 0.5 =
+* Official Genesis 2.0 HTML5 support.
+* Refactored code completely.
 
 = 0.4 =
 * Switched to Genesis 1.8 support only (not backwards compatible)
