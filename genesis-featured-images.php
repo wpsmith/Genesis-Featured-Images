@@ -3,7 +3,7 @@
 Plugin Name: Genesis Featured Images
 Plugin URI: http://www.wpsmith.net/genesis-featured-images
 Description: Sets a default image for post thumbnails for the Genesis framework.
-Version: 0.5.2
+Version: 0.6.0
 Author: Travis Smith
 Author URI: http://www.wpsmith.net/
 Requires at least: 3.4.0
