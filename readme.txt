@@ -38,6 +38,10 @@ Yes. Here are some things that I want to eventually include:
 1. Inpost Settings Metabox
 
 == Changelog ==
+= 0.6 =
+* Fix accidental over-ride of all featured images
+* Fix plugin activation "Cheatin' Eh?"
+
 = 0.5 =
 * Official Genesis 2.0 HTML5 support.
 * Refactored code completely.
